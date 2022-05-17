@@ -3,6 +3,8 @@ kind: API
 metadata:
   name: petstore
   description: The petstore API
+  annotations:
+    kafka.apache.org/consumer-groups: value
   tags:
     - store
     - rest
