@@ -12,3 +12,4 @@ spec:
     - ./apis/swapi-graphql.yaml
     - ./apis/wayback-archive-api.yaml
     - ./apis/wayback-search-api.yaml
+    - ./apis/kafka-component.yaml

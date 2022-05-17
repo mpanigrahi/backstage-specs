@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: example
+  description: example.com
+  annotations:
+    kafka.apache.org/consumer-groups: rdx-lab-cluster/test-group
+spec:
+  type: website
+  lifecycle: production
+  owner: user:guest
