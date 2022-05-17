@@ -4,7 +4,7 @@ metadata:
   name: petstore
   description: The petstore API
   annotations:
-    kafka.apache.org/consumer-groups: value
+    kafka.apache.org/consumer-groups: rdx-lab-cluster/test-group
   tags:
     - store
     - rest
