@@ -1,4 +1,0 @@
-- service: eat-jenkins
-  teamKey: taww
-  jenkinsType: dev
-  environment: Production
