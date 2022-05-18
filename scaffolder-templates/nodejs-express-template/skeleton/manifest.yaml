@@ -1,0 +1,161 @@
+# Pipeline details across environments (defaults)
+common:
+  pipelineType: app-dev
+  debug: true
+
+  npm:
+    dockerImage: 'jnj.artifactrepo.jnj.com/jpm/node:14'
+
+  unitTest:
+    enabled: true
+    type: multi
+    stages:
+      query-engine:
+        enabled: true
+        type: npm
+        dir: "project/rdx-conversion-uom-api"
+        npmCommand: "npm run coverage"
+
+  lint:
+    enabled: true
+    type: "multi"
+    stages:
+       query-engine:
+         enabled: true
+         type: npm
+         dir: "project/rdx-conversion-uom-api"
+
+  staticAnalysis:
+    enabled: true
+    type: sonar
+    shortLivedAnalysis: true
+    longLivedAnalysis: true
+
+  versionCalculation:
+    enabled: true
+    type: gitversion
+    patternType: jnj-developer-branch
+
+  package:
+    enabled: true
+    type: helm
+    versionFileUpdates: 
+      - type: yaml
+        file: _scm_helm/Chart.yaml
+        path: version
+      - type: yaml
+        file: _scm_helm/Chart.yaml
+        path: appVersion
+      - type: yaml
+        file: _scm_helm/values.yaml
+        path: image.tag
+        
+  publish:
+    enabled: true
+    type: "multi"
+    stages:
+      Helm:
+        enabled: true
+        type: helm
+        chartRepo: taww-helm-charts
+      Docker:
+        enabled: true
+        type: docker
+        updateToVersion: false
+        credsList:
+          - registry: https://jnj.artifactrepo.jnj.com
+            credentialsId: sourcecode-bitbucket
+
+#  publish:
+#    enabled: false
+#    type: "multi"
+#    stages:
+#      Helm:
+#        enabled: false
+#        type: helm
+#        chartRepo: ncnl-helm-charts
+#      Docker:
+#        enabled: false
+#        type: docker
+#        updateToVersion: false
+#        credsList: 
+#          - registry: https://jnj.artifactrepo.jnj.com
+#            credentialsId: sourcecode-bitbucket
+
+  buildAnalysis:
+    enabled: false
+
+  deploy:
+    enabled: true
+    type: helm
+    name: rdx-conversion-uom-api
+    namespace: rdx-apps-pdrm
+    chartRepoCredentialsId: "sourcecode-bitbucket"    
+    kubernetesConfig:
+      type: aks
+      name: azr-arb-rdxcluster-development
+      directoryId: 3ac94b33-9135-4821-9502-eafda6592a35
+      resourceGroup: AZR-ARB-Rdxcluster-Development
+      region: west europe
+      credentialsId: "itx-agq-eatjenkinsadminapi"
+      kubelogin: true
+    atomic: true
+
+
+#  deploy:
+#    enabled: false
+#    type: helm
+#    name: predev-attendance-tracker
+#    namespace: student#-predev
+#    chartRepoCredentialsId: "sourcecode-bitbucket"
+#    configFiles:
+#      - repo: https://sourcecode.jnj.com/scm/asx-ncnl/student#.git
+#        repoCredentialsId: "sourcecode-bitbucket"
+#        encryptionCredentialsId: attendance-tracker-gpg
+#        files:
+#          - file: _scm_config/predev.values.yaml
+#            type: plaintext
+#          - file: _scm_config/common.values.yaml
+#            type: plaintext
+#          - file: _scm_config/student.values.yaml
+#            type: plaintext
+#          - file: _scm_config/secrets.encrypted.yaml
+#            type: encrypted
+#    kubernetesConfig:
+#      type: eks
+#      name: itx-ana-xenacluster-development
+#      region: us-east-1
+#      credentialsId: "itx-ana-eatjenkinsadminapi"
+#    atomic: true
+  
+#  integrationTest:
+#    enabled: false
+#    type: script
+  
+#  regressionTest:
+#    enabled: false
+#    type: robot-framework
+#    projectTestFolder: test/robot_lab
+#    jiraProjectKey: NCNL
+#    credentialsId: jira
+#    overridingProperties: 
+#      itags: "Report_Creation"
+  
+#  hyperion:
+#    buildResults:
+#      failed: "FAILURE"
+#      unknown: "FAILURE"
+#      broken: "UNSTABLE"
+#      pending: "UNSTABLE"
+#      passed: "SUCCESS"
+#      skipped: "SUCCESS"
+#      knownissuesonly: "SUCCESS"
+#      notcovered: "SUCCESS"
+#    overridingProperties: []
+#    defaultProperties:
+#      - "io.qameta.allure.history.DelegatingTrendManager-History/activeManager=local"
+#      - "io.qameta.allure.history.DelegatingTrendManager-Duration/activeManager=local"
+#      - "com.jjconsumer.dte.bdd.variable.Variables-Global/urlredirectBaseURL=https://dvl-urlredirect.xena.dev"
+  
+  resolveArtifacts:
+    enabled: false

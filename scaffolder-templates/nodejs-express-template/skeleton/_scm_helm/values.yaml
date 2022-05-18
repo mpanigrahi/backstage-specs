@@ -1,0 +1,20 @@
+Namespace: rdx-apps-pdrm
+tier: api-backend
+replicaCount: 1
+imgPullSecret: taww-jnj-artifactory
+app:
+  name: rdx-conversion-uom-api
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3001
+image:
+  repository: taww-docker.artifactrepo.jnj.com/rdx-conversion-uom-api
+  tag: 0.2.0-alpha.144.styling-fixes
+  pullPolicy: IfNotPresent
+  containerPort: 3001
+# fe_container:
+#   PDI_APP_API_URI: pdi.rdx.jnj.com
+# role:
+#   namespace: default
+#   name: default-admin
