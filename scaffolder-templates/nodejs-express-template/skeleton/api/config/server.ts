@@ -34,7 +34,7 @@ export function createServer() {
     app.use(middleware.swaggerRouter(options));
 
     // Serve the Swagger documents and Swagger UI
-    app.use(middleware.swaggerUi({swaggerUi: "/currency-weight/docs", apiDocs: "/currency-weight/api-docs"}));
+    app.use(middleware.swaggerUi({swaggerUi: "/docs", apiDocs: "/api-docs"}));
 
     // Enable CORS
     app.use(cors());

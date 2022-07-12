@@ -32,7 +32,7 @@ spec:
           ui:field: OwnerPicker
           ui:options:
             allowedKinds:
-              - Group
+              - Group              
     - title: Choose a location
       required:
         - repoUrl
@@ -44,6 +44,11 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
+        bitbucket_code:
+          title: Name
+          type: string
+          description: Enter the bitbucket Code where you want to create this repo
+          ui:field: EntityNamePicker              
   steps:
     - id: template
       name: Fetch Skeleton + Template
