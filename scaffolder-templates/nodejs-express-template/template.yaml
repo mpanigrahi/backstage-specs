@@ -11,7 +11,7 @@ spec:
   owner: mpanigr2@its.jnj.com
   type: api
   parameters:
-    - title: Express API template using nodejs
+    - title: Rest API template using nodejs and express
       required:
         - component_id
         - owner
